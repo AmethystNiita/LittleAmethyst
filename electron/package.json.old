@@ -1,0 +1,36 @@
+{
+  "name": "little-amethyst",
+  "version": "1.0.0",
+  "description": "a soft, cozy voice that gives gentle words and warm comfort...",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "make": "electron-forge make"
+  },
+  "build": {
+    "appId": "com.amethystniita.littleamethyst",
+    "productName": "Little Amethyst",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "assets/ui/icon.ico"
+    },
+    "files": [
+      "**/*",
+      "!dist/*"
+    ]
+  },
+  "dependencies": {
+    "electron-forge": "^5.2.4",
+    "node-fetch": "^3.3.2",
+    "three": "^0.183.2",
+    "three-stdlib": "^2.36.1"
+  },
+  "devDependencies": {
+    "electron": "^41.1.1",
+    "electron-packager": "^17.1.2",
+    "electron-prebuilt-compile": "8.2.0"
+  }
+}
