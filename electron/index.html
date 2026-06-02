@@ -7,28 +7,33 @@
     }
     .thinking-text {
       animation: softBlink 1.5s infinite ease-in-out;
-      font-style: italic;
-      color: #5a5a5a;
+      color: #ffffff;
+    }
+    #input:disabled {
+      background-color: #ffffff !important;
+      color: #000000 !important;
+      cursor: not-allowed;
+      -webkit-text-fill-color: #757575;
     }
   </style>
   <body style="
   margin: 0;
   overflow: hidden;
-  background: linear-gradient(#7ec8ff, #bfe6ff);
+  background: linear-gradient(#264e8f, #3676a8);
   ">
     <div id="cube"></div>
     <div id="response" style="
       position: absolute;
       bottom: 80px;
       width: 100%;
-      color: #2b2b2b;
+      color: #ffffff;
       opacity: 0.8;
       transition: all 0.2s ease-in-out;
       text-align: center;
       font-size: 20px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     ">
-      hey... i’m here... how are you feeling..?
+      hey... i’m here... how are you feeling-?
     </div>
     <input id="input" placeholder="say something..."
       style="
@@ -52,11 +57,12 @@
         right: 20px;
         cursor: pointer;
         font-size: 24px;
+        color: #ffffff;
         transition: opacity 0.3s;
         z-index: 100;
-    ">⚙️</div>
+    ">◆</div>
     <div id="settingsPopup" style="
-        display: none;
+        display: flex;
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0,0,0,0.3);
@@ -64,9 +70,12 @@
         z-index: 1000;
         align-items: center;
         justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
     ">
         <div style="
-            background: white;
+            background: #3676a8;
             padding: 30px;
             border-radius: 20px;
             width: 500px;
@@ -75,28 +84,28 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         ">
-            <h3 style="margin: 0; color: #5a5a5a; font-weight: 600;">little amethyst settings</h3>      
-            <div style="margin: 5px 0 25px 0; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #a0a0a0; line-height: 1.4;">
-                if you don't have a key yet... you can find one at <br>
+            <h3 style="margin: 0; color: #ffffff; font-weight: 600;">little amethyst settings</h3>      
+            <div style="margin: 5px 0 25px 0; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #eeeeee; line-height: 1.4;">
+                if you don't have a key yet, you can find one at: <br>
                 <a href="https://aistudio.google.com/api-keys" 
                   target="_blank" 
-                  style="color: #00aae2; text-decoration: none; font-weight: 500;">aistudio.google.com/api-keys</a>
+                  style="color: #5fd7ff; text-decoration: none; font-weight: 500;">aistudio.google.com/api-keys</a>
             </div>
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-size: 20px;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #5a5a5a;">api key</label>
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff;">api key</label>
                 <input id="apiKeyInput" type="password" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #eee; box-sizing: border-box; background: #fcfcfc;">
             </div>
             <div style="margin-bottom: 25px;">
-                <label style="display: block; margin-bottom: 8px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; color: #5a5a5a;">model choice</label>
+                <label style="display: block; margin-bottom: 8px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; color: #ffffff;">model choice</label>
                 <select id="modelSelect" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #eee; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 font-size: 17px; box-sizing: border-box; background: #fcfcfc;">
-                    <option value="gemma-3-4b-it">gemma-3-4b-it (fast)</option>
-                    <option value="gemma-3-12b-it">gemma-3-12b-it (smart)</option>
+                    <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it (fast)</option>
+                    <option value="gemma-4-31b-it">gemma-4-31b-it (smart)</option>
                 </select>
             </div>
             <button id="saveSettings" style="
-                background: #7ec8ff;
+                background: #30638a;
                 color: white;
                 border: none;
                 padding: 12px 20px;
@@ -122,14 +131,24 @@
   const saveBtn = document.getElementById('saveSettings');
 
 // settings button
-  settingsBtn.onclick = () => settingsPopup.style.display = 'flex';
+  settingsBtn.onclick = () => {
+      settingsPopup.style.opacity = '1';
+      settingsPopup.style.pointerEvents = 'auto';
+      input.disabled = true;
+      apiKeyInput.disabled = false;
+      modelSelect.disabled = false;
+  };
 
 // save and close button
   saveBtn.onclick = () => {
       localStorage.setItem('little_amethyst_api_key', document.getElementById('apiKeyInput').value);
       localStorage.setItem('little_amethyst_model', document.getElementById('modelSelect').value);
-      
-      settingsPopup.style.display = 'none';
+      settingsPopup.style.opacity = '0';
+      settingsPopup.style.pointerEvents = 'none';
+      apiKeyInput.disabled = true;
+      modelSelect.disabled = true;
+      input.disabled = false;                     
+      input.focus();
   };
 
 // load saved settings on startup
@@ -140,6 +159,9 @@
       if(localStorage.getItem('little_amethyst_model')) {
           document.getElementById('modelSelect').value = localStorage.getItem('little_amethyst_model');
       }
+      apiKeyInput.disabled = true;
+      modelSelect.disabled = true;
+      input.focus();
   };
 
 // unused random thinking messages
@@ -197,12 +219,10 @@ input.addEventListener("keydown", async (e) => {
     } catch (error) {
       responseDiv.classList.remove("thinking-text");
 
-      if (error === "no_key") {
-        responseDiv.innerText = "mnh... i don't have my key yet... could you check the settings for me..?";
-      } else if (error === "server_overload") {
-        responseDiv.innerText = "mhm... the stars are too loud... let's try again in a bit...";
+      if (error === "no-key") {
+        responseDiv.innerText = "mnh... i don't have my key yet... could you check the settings for me-?";
       } else {
-        responseDiv.innerText = "mnh... my head feels a bit fuzzy... can you say that again..?";
+        responseDiv.innerText = "mnh... my head feels a bit fuzzy... can you say that again-?";
       }
     }
 

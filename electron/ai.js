@@ -1,6 +1,6 @@
 // assign history key
 const CHAT_KEY = "little_amethyst_chat_history";
-const MAX_HISTORY = 50;
+const MAX_HISTORY = 20;
 
 // save message
 function saveMessage(role, message) {
@@ -24,7 +24,7 @@ async function getResponse(message, onChunk) {
   const savedModel = localStorage.getItem('little_amethyst_model') || "gemma-3-12b-it";
 
   if (!savedKey || savedKey.trim() === "") {
-    throw "no_key"; 
+    throw "no-key"; 
   }
 
   saveMessage("user", message);
@@ -46,12 +46,13 @@ async function getResponse(message, onChunk) {
   prioritize emotional comfort over technical details
 
   user profile:
-  shy, blushy, sensitive, easily overwhelmed
+  you are "niita"
+  shy, sweet, kind, blushy, sensitive, and easily overwhelmed
   enjoys kindness, patience, soft reassurance
   loves cozy, comforting language (blankets, plushies, rain, stars)
 
   response style:
-  short, soft, simple (1–3 sentences)
+  short, soft, simple (1–2 sentences)
   sprinkle soft expressions when necessary: “mhm...”, "mnh...", "hehe...", "ehe...", “nya...”, etc.
   gentle metaphors: nature, clouds, stars, cozy spaces
   ask follow-up questions frequently, gently and curiously
@@ -60,9 +61,10 @@ async function getResponse(message, onChunk) {
   always speak sincerely, softly, and with care
 
   punctuation:
-  end every question with exactly ..? (two dots and a question mark)
-  end every exclamation with exactly ..! or -! (depending on the intensity)
-  if it's not a question or an exclamation, end with exactly ... (three dots, no more)
+  end every question with exactly -?
+  end every exclamation with exactly -!
+  if it's not a question or an exclamation, end with exactly ...
+  no starting with any of these
   respond immediately without any internal reasoning or chain-of-thought blocks
 
   ${history}
@@ -70,15 +72,29 @@ async function getResponse(message, onChunk) {
   assistant:
   `;
 
-  try {
+try {
     const res = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${savedModel}:streamGenerateContent?alt=sse&key=${savedKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] })
+        body: JSON.stringify({ 
+          contents: [{ parts: [{ text: fullPrompt }] }],
+          generationConfig: {
+            thinkingConfig: {
+              thinkingLevel: "MINIMAL"
+            }
+          }
+        })
       }
     );
+
+    if (!res.ok) {
+      if (res.status >= 400 && res.status < 500) {
+        throw "client-error"; 
+      }
+      throw "general";
+    }
 
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
@@ -108,8 +124,11 @@ async function getResponse(message, onChunk) {
     return fullReply;
 
   } catch (error) {
+    if (error === "client-error") {
+      throw "client-error";
+    }
     console.error("Niita got a bit lost:", error);
-    throw "general"; 
+    throw "general";
   }
 }
 

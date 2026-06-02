@@ -1,12 +1,13 @@
 {
   "name": "little-amethyst",
-  "version": "1.0.1",
-  "description": "a soft, cozy voice that gives gentle words and warm comfort...",
+  "productName": "Little Amethyst",
+  "version": "1.0.3",
+  "description": "A soft, cozy voice that gives gentle words and warm comfort...",
   "author": "Niita the Amethyst",
   "main": "main.js",
   "scripts": {
-    "go": "electron .",
-    "start": "electron-forge start",
+    "start": "electron .",
+    "go": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
@@ -16,7 +17,8 @@
     "electron-squirrel-startup": "^1.0.1",
     "node-fetch": "^3.3.2",
     "three": "^0.183.2",
-    "three-stdlib": "^2.36.1"
+    "three-stdlib": "^2.36.1",
+    "update-electron-app": "^3.2.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.11.1",
@@ -30,6 +32,15 @@
     "electron": "^41.1.1"
   },
   "config": {
+    "build": {
+      "publish": [
+        {
+          "provider": "github",
+          "owner": "AmethystNiita",
+          "repo": "LittleAmethyst"
+        }
+      ]
+    },
     "forge": {
       "packagerConfig": {
         "name": "Little Amethyst",
@@ -41,10 +52,10 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "little_amethyst",
+            "name": "little-amethyst",
             "setupIcon": "./icon.ico",
-            "authors": "AmethystNiita",
-            "description": "a soft, cozy voice that gives gentle words and warm comfort..."
+            "authors": "Niita the Amethyst",
+            "description": "A soft, cozy voice that gives gentle words and warm comfort..."
           }
         },
         {
@@ -60,6 +71,7 @@
           "config": {}
         }
       ]
+      
     }
   }
 }
