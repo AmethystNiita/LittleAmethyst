@@ -56,5 +56,5 @@ To talk with Little Amethyst, you will need a free API key from Google AI Studio
 ## 💫 Built with
 
 * **Electron** - Desktop application framework
-* **Three.js** - 3D graphics rendering (`cube.js`)
+* **Three.js** - 3D graphics rendering
 * **Google Gemma** - Generative AI models
