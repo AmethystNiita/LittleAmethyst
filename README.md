@@ -59,7 +59,7 @@ Start your desktop companion with:
 To talk with Little Amethyst, you will need a free API key from Google AI Studio.
 
 1. Launch the application.
-2. Click the settings gear icon (**⚙️**) in the top-right corner.
+2. Click (**◆**) in the top-right corner.
 3. Click the link to grab a key from **[aistudio.google.com/api-keys](https://aistudio.google.com/api-keys)**.
 4. Paste your key into the input field, choose your preferred model, and click **Save and Close**.
 
