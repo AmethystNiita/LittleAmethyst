@@ -1,4 +1,4 @@
-## 💜 Little Amethyst
+## 💖 Little Amethyst
 
 "hey... i’m here... how are you feeling-?"
 
@@ -11,7 +11,7 @@ Little Amethyst is a minimal, soft, and comforting desktop AI companion. It prov
 * **AI Models:** You can choose between `gemma-4-26b-a4b-it` (quick responses) and `gemma-4-31b-it` (smarter conversations).
 * **Local Storage:** Safely saves your API key and model preferences directly on your computer.
 
-## 🚀 Downloads and Releases
+## 😍 Downloads and Releases
 
 If you just want to run the app without messing with any code or terminals, you can grab the ready-to-use version!
 
@@ -19,7 +19,7 @@ If you just want to run the app without messing with any code or terminals, you 
 2. Download the latest version.
 3. Run the installer, launch Little Amethyst, and say hey :3
 
-## ⚙️ Setup & Installation
+## 🌟 Setup & Installation
 
 ### Prerequisites
 
@@ -53,7 +53,7 @@ To talk with Little Amethyst, you will need a free API key from Google AI Studio
 3. Click the link to grab a key from **[aistudio.google.com/api-keys](https://aistudio.google.com/api-keys)**.
 4. Paste your key into the input field, choose your preferred model, and click **Save and Close**.
 
-## 🌸 Built With
+## 💫 Built With
 
 * **Electron** - Desktop application framework
 * **Three.js** - 3D graphics rendering (`cube.js`)
