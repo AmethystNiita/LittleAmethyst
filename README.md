@@ -1,5 +1,3 @@
----
-
 ## 💜 Little Amethyst
 
 "hey... i’m here... how are you feeling-?"
@@ -70,5 +68,3 @@ To talk with Little Amethyst, you will need a free API key from Google AI Studio
 * **Electron** - Desktop application framework
 * **Three.js** - 3D graphics rendering (`cube.js`)
 * **Google Gemma** - Generative AI models
-
----
