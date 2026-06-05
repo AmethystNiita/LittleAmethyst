@@ -6,10 +6,10 @@ Little Amethyst is a minimal, soft, and comforting desktop AI companion. It prov
 
 ## ✨ Features
 
-* **Cozy Aesthetic:** A smooth, calming gradient background designed to make you feel feel safe.
-* **Interactive Muffin:** Cute glowing patented Niita-head in the middle.
-* **AI Models:** You can choose between `gemma-4-26b-a4b-it` (quick responses) and `gemma-4-31b-it` (smarter conversations).
-* **Local Storage:** Safely saves your API key and model preferences directly on your computer.
+* A smooth, calming gradient background designed to make you feel feel safe.
+* Cute glowing patented Niita-head in the middle.
+* You can choose between `gemma-4-26b-a4b-it` (quick responses) and `gemma-4-31b-it` (smarter conversations).
+* Safely saves your API key and model preferences directly on your computer.
 
 ## 😍 Downloads and releases
 
@@ -17,7 +17,7 @@ If you just want to run the app without messing with any code or terminals, you 
 
 1. Go to the "Releases" section on the right side of this GitHub page.
 2. Download the latest version.
-3. Run the installer, launch Little Amethyst, and say hey :3
+3. Run the installer, launch Little Amethyst, and say hello!
 
 ## 🌟 Setup and installation
 
