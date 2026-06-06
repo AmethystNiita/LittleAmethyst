@@ -84,14 +84,14 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         ">
-            <h3 style="margin: 0; color: #ffffff; font-weight: 600;">little amethyst settings</h3>      
-            <div style="margin: 5px 0 25px 0; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #eeeeee; line-height: 1.4;">
-                if you don't have a key yet, you can find one at: <br>
+            <h3 style="margin: 0; color: #ffffff; font-weight: 600;">little amethyst settings</h3>
+            <div style="margin: 5px 0 10px 0; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #eeeeee; line-height: 1.4;">
+                if you don't have a key yet, you can find one at:<br>
                 <a href="https://aistudio.google.com/api-keys" 
                   target="_blank" 
                   style="color: #5fd7ff; text-decoration: none; font-weight: 500;">aistudio.google.com/api-keys</a>
             </div>
-            <div style="margin-bottom: 20px;">
+            <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 8px; font-size: 20px;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff;">api key</label>
                 <input id="apiKeyInput" type="password" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #eee; box-sizing: border-box; background: #fcfcfc;">
@@ -116,6 +116,9 @@
                 font-size: 20px;
                 transition: opacity 0.2s;
             ">save and close</button>
+            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); font-family: 'Segoe UI', sans-serif; margin-top: 15px;">
+                <span id="appVersion">0.0.0</span>
+            </div>
         </div>
     </div>
     <script src="cube.js"></script>
@@ -153,6 +156,13 @@
 
 // load saved settings on startup
   window.onload = () => {
+      try {
+        const packageData = require('./package.json');
+        document.getElementById('appVersion').innerText = packageData.version;
+      } catch (e) {
+          console.error("Meep, couldn't find the version!", e);
+          document.getElementById('appVersion').innerText = "1.0.4";
+      }
       if(localStorage.getItem('little_amethyst_api_key')) {
           document.getElementById('apiKeyInput').value = localStorage.getItem('little_amethyst_api_key');
       }

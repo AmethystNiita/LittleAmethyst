@@ -2,3 +2,5 @@ electron/node_modules/
 electron/out/
 compiled/
 *.log
+Thumbs.db
+.DS_Store
