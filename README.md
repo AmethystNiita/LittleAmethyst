@@ -1,3 +1,7 @@
+<img width="1918" height="1017" alt="image" src="https://github.com/user-attachments/assets/1a98aa1a-f016-4d8a-922d-8df4ce06165e" />
+
+<p align="center"><i>Oh no, they're staring directly into my face...</i></p>
+
 ## 💖 Little Amethyst
 
 "hey... i’m here... how are you feeling-?"
