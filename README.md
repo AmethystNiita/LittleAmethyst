@@ -6,11 +6,11 @@
 
 "hey... i’m here... how are you feeling-?"
 
-Little Amethyst is a minimal, soft, and comforting desktop AI companion. It provides a safe, quiet space to share your thoughts, featuring a gentle aesthetic, and custom model selection.
+Little Amethyst is your minimal, soft, and comforting little desktop AI.
 
 ## ✨ Features
 
-* A smooth, calming gradient background designed to make you feel feel safe.
+* A smooth, calming gradient background.
 * Cute glowing patented Niita-head in the middle.
 * You can choose between `gemma-4-26b-a4b-it` (quick responses) and `gemma-4-31b-it` (smarter conversations).
 * Safely saves your API key and model preferences directly on your computer.
@@ -21,7 +21,7 @@ If you just want to run the app without messing with any code or terminals, you 
 
 1. Go to the "Releases" section on the right side of this GitHub page.
 2. Download the latest version.
-3. Run the installer, launch Little Amethyst, and say hello!
+3. Run the installer, and launch Little Amethyst.
 
 ## 🌟 Setup and installation
 
