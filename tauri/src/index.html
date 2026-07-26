@@ -109,10 +109,23 @@
             </div>
 
             <!-- Shared Close Button -->
-            <button id="closeMenu" style="background: #30638a; color: white; border: none; padding: 10px; border-radius: 12px; cursor: pointer; width: 100%; font-family: 'Segoe UI', sans-serif; font-size: 16px; transition: opacity 0.2s;">close</button>
+            <button id="closeMenu" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 10px; border-radius: 12px; cursor: pointer; width: 100%; font-family: 'Segoe UI', sans-serif; font-size: 16px; transition: opacity 0.2s;">close</button>
             
             <div style="font-size: 13px; color: rgba(255, 255, 255, 0.5); font-family: 'Segoe UI', sans-serif; margin-top: 10px; text-align: center;">
                 <span id="appVersion">0.0.0</span>
+            </div>
+        </div>
+    </div>
+    <!-- Update Available Popup Modal -->
+    <div id="updatePopup" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out;">
+        <div style="background: #3676a8; padding: 25px 30px; border-radius: 20px; width: 400px; display: flex; flex-direction: column; font-family: 'Segoe UI', sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; color: #ffffff;">
+            <div style="font-size: 20px; font-weight: 600; margin-bottom: 10px;">update available-!</div>
+            <div id="updateMessage" style="font-size: 15px; margin-bottom: 20px; opacity: 0.9; line-height: 1.4;">
+                a new version of little amethyst is waiting for you...
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button id="updateYesBtn" style="flex: 1; background: rgba(255,255,255,0.2); color: #ffffff; border: none; padding: 10px; border-radius: 12px; cursor: pointer; font-size: 15px;">visit release page</button>
+                <button id="updateNoBtn" style="flex: 1; background: rgba(255,255,255,0.2); color: #ffffff; border: none; padding: 10px; border-radius: 12px; cursor: pointer; font-size: 15px;">not now</button>
             </div>
         </div>
     </div>
@@ -143,7 +156,7 @@
         
         const clearHistoryBtn = document.getElementById('clearHistory');
         const historyList = document.getElementById('historyList');
-
+    
         document.addEventListener('contextmenu', (e) => e.preventDefault());
 
         document.addEventListener('keydown', (e) => {
@@ -256,7 +269,7 @@
         };
 
         window.onload = () => {
-            document.getElementById('appVersion').innerText = "1.0.6";
+            document.getElementById('appVersion').innerText = CURRENT_VERSION;
             if(localStorage.getItem('little_amethyst_api_key')) {
                 document.getElementById('apiKeyInput').value = localStorage.getItem('little_amethyst_api_key');
             }
@@ -316,6 +329,92 @@
                 input.focus();
             }
         });
+        const CURRENT_VERSION = "1.0.7";
+        let latestReleaseUrl = "https://github.com/AmethystNiita/LittleAmethyst/releases";
+
+        // Compare semantic versions (1.0.6 vs 1.0.7)
+        function isNewerVersion(current, latest) {
+            const cArr = current.split('.').map(Number);
+            const lArr = latest.split('.').map(Number);
+            for (let i = 0; i < 3; i++) {
+                if (lArr[i] > cArr[i]) return true;
+                if (lArr[i] < cArr[i]) return false;
+            }
+            return false;
+        }
+
+        // Fetch the latest release from GitHub API
+        async function checkForUpdates() {
+            try {
+                const res = await fetch('https://api.github.com/repos/AmethystNiita/LittleAmethyst/releases/latest');
+                if (!res.ok) return;
+                
+                const release = await res.json();
+                const latestVersion = release.tag_name.replace('v', '');
+                
+                if (isNewerVersion(CURRENT_VERSION, latestVersion)) {
+                    latestReleaseUrl = release.html_url;
+                    showUpdatePopup(release.tag_name);
+                }
+            } catch (error) {
+                console.log("Could not check for updates:", error);
+            }
+        }
+
+        // Function to toggle background focusability
+        function setBackgroundFocusable(isFocusable) {
+            // Select interactive elements outside the update popup
+            const elements = document.querySelectorAll('input, button, textarea, a, [tabindex]');
+            elements.forEach(el => {
+                if (!document.getElementById('updatePopup').contains(el)) {
+                    if (isFocusable) {
+                        el.removeAttribute('tabindex');
+                    } else {
+                        el.setAttribute('tabindex', '-1');
+                    }
+                }
+            });
+        }
+
+        function showUpdatePopup(tagName) {
+            const updatePopup = document.getElementById('updatePopup');
+            const updateMessage = document.getElementById('updateMessage');
+            
+            // Clear focus from whatever was selected before (text inputs, buttons, etc.)
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+
+            updateMessage.innerText = `a new version (${tagName}) of little amethyst is waiting for you... would you like to visit the release page to install it now-?`;
+            
+            updatePopup.style.opacity = '1';
+            updatePopup.style.pointerEvents = 'auto';
+
+            // Disable tabbing into background elements
+            setBackgroundFocusable(false);
+        }
+
+        function hideUpdatePopup() {
+            const updatePopup = document.getElementById('updatePopup');
+            updatePopup.style.opacity = '0';
+            updatePopup.style.pointerEvents = 'none';
+
+            // Restore tabbing for background elements
+            setBackgroundFocusable(true);
+        }
+
+        // Button interactions
+        document.getElementById('updateYesBtn').onclick = () => {
+            window.open(latestReleaseUrl, '_blank');
+            hideUpdatePopup();
+        };
+
+        document.getElementById('updateNoBtn').onclick = () => {
+            hideUpdatePopup();
+        };
+
+        // Trigger check shortly after startup
+        setTimeout(checkForUpdates, 0);
     </script>
 </body>
 </html>
