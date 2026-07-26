@@ -67,28 +67,46 @@ let targetGlow = 0;
 window.startThinking = function () {
   targetSpinSpeed = 0.08;
   targetGlow = 0.6;
-  };
+};
 
 window.stopThinking = function () {
   targetSpinSpeed = 0.01;
   targetGlow = 0;
-  };
+};
 
-// render frame
-function animate() {
+// --- 60 FPS Cap Logic ---
+let lastFrameTime = performance.now();
+const fpsInterval = 1000 / 60; // ~16.67ms per frame
+
+function animate(currentTime) {
   requestAnimationFrame(animate);
-  spinSpeed += (targetSpinSpeed - spinSpeed) * 0.05;
-  object.rotation.y += spinSpeed;
-  glowStrength += (targetGlow - glowStrength) * 0.05;
 
-  object.traverse((child) => {
-      if (child.isMesh) {
-      child.material.emissive = new THREE.Color(0x88ccff);
-      child.material.emissiveIntensity = glowStrength;
-      }
-  });
+  const elapsed = currentTime - lastFrameTime;
 
-renderer.render(scene, camera);
+  // Only render if ~16.67ms has passed since the last frame
+  if (elapsed >= fpsInterval) {
+    // Adjust lastFrameTime while keeping track of any extra drift time
+    lastFrameTime = currentTime - (elapsed % fpsInterval);
+
+    spinSpeed += (targetSpinSpeed - spinSpeed) * 0.05;
+    object.rotation.y += spinSpeed;
+    glowStrength += (targetGlow - glowStrength) * 0.05;
+
+    object.traverse((child) => {
+        if (child.isMesh) {
+            child.material = new THREE.MeshStandardMaterial({
+                map: texture,
+                transparent: true,
+                alphaTest: 0.5,
+                depthWrite: false
+            });
+            child.material.emissive = new THREE.Color(0x88ccff);
+            child.material.emissiveIntensity = glowStrength;
+        }
+    });
+
+    renderer.render(scene, camera);
+  }
 }
 
-animate();
+animate(performance.now());

@@ -6,6 +6,9 @@
     <link rel="icon" type="image/x-icon" href="./icon.ico">
     <title>Little Amethyst</title>
     <style>
+        body, input, button, select {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif !important;
+        }
         @keyframes softBlink {
             0%, 100% { opacity: 0.4; }
             50% { opacity: 0.9; }
@@ -20,46 +23,101 @@
             cursor: not-allowed;
             -webkit-text-fill-color: #757575;
         }
+        
+        /* Custom scrollbar for history list */
+        #historyList::-webkit-scrollbar {
+            width: 6px;
+        }
+        #historyList::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        #historyList::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Underlined menu tab styling */
+        .menu-tab {
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 22px;
+            font-weight: 600;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+        }
+        .menu-tab:hover {
+            color: #ffffff;
+        }
+        .menu-tab.active {
+            color: #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
     </style>
 </head>
 <body style="margin: 0; overflow: hidden; background: linear-gradient(#264e8f, #3676a8);">
 
     <div id="cube"></div>
     
-    <div id="response" style="position: absolute; bottom: 80px; width: 100%; color: #ffffff; opacity: 0.8; transition: all 0.2s ease-in-out; text-align: center; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div id="response" style="position: absolute; bottom: 80px; width: 100%; color: #ffffff; opacity: 0.8; transition: all 0.2s ease-in-out; text-align: center; font-size: 20px;">
         hey... i'm here... how are you feeling-?
     </div>
     
-    <input id="input" placeholder="say something..." autocomplete="off" style="transition: opacity 0.3s ease; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px; border-radius: 10px; border: none; outline: none; width: 60%; text-align: center; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <input id="input" placeholder="say something..." autocomplete="off" style="transition: opacity 0.3s ease; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px; border-radius: 10px; border: none; outline: none; width: 60%; text-align: center; font-size: 20px">
     
-    <div id="settingsBtn" style="position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 24px; color: #ffffff; transition: opacity 0.3s; z-index: 100;">◆</div>
+    <!-- Menu Toggle Button -->
+    <div id="menuBtn" style="position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 24px; color: #ffffff; transition: opacity 0.3s; z-index: 100;" title="menu">◆</div>
     
-    <div id="settingsPopup" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out;">
-        <div style="background: #3676a8; padding: 30px; border-radius: 20px; width: 500px; text-align: center; font-size: 25px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
-            <h3 style="margin: 0; color: #ffffff; font-weight: 600;">little amethyst settings</h3>
-            <div style="margin: 5px 0 10px 0; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #eeeeee; line-height: 1.4;">
-                if you don't have a key yet, you can find one at:<br>
-                <a href="https://aistudio.google.com/api-keys" target="_blank" style="color: #5fd7ff; text-decoration: none; font-weight: 500;">aistudio.google.com/api-keys</a>
+    <!-- Unified Menu Window -->
+    <div id="menuPopup" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out;">
+        <div style="background: #3676a8; padding: 25px 30px; border-radius: 20px; width: 500px; max-height: 80vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.1); box-sizing: border-box;">
+            
+            <!-- Underlined Tab Navigation Header -->
+            <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px;">
+                <span id="tabHistory" class="menu-tab active">chat history</span>
+                <span id="tabSettings" class="menu-tab">settings</span>
             </div>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 8px; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff;">api key</label>
-                <input id="apiKeyInput" type="password" autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #eee; box-sizing: border-box; background: #fcfcfc;">
+
+            <!-- Panel 1: Chat History -->
+            <div id="panelHistory" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+                <div style="font-size: 16px; color: #ffffff; text-align: center; margin-bottom: 18px;">
+                    this saves only 10 message pairs
+                </div>
+                <div id="historyList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; padding-right: 5px; max-height: 45vh;">
+                </div>
+                <button id="clearHistory" style="background: #a83636; color: white; border: none; padding: 10px; border-radius: 12px; cursor: pointer; width: 100%; font-family: 'Segoe UI', sans-serif; font-size: 16px; transition: opacity 0.2s; margin-bottom: 10px;">clear history</button>
             </div>
-            <div style="margin-bottom: 25px;">
-                <label style="display: block; margin-bottom: 8px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; color: #ffffff;">model choice</label>
-                <select id="modelSelect" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #eee; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 17px; box-sizing: border-box; background: #fcfcfc;">
-                    <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it (fast)</option>
-                    <option value="gemma-4-31b-it">gemma-4-31b-it (smart)</option>
-                </select>
+
+            <!-- Panel 2: Settings -->
+            <div id="panelSettings" style="display: none; flex-direction: column;">
+                <div style="margin: 0 0 15px 0; font-size: 16px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff; line-height: 1.4; text-align: center;">
+                    if you don't have a key yet, you can find one at:<br>
+                    <a href="https://aistudio.google.com/api-keys" target="_blank" style="color: #5fd7ff; text-decoration: none; font-weight: 500;">aistudio.google.com/api-keys</a>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-size: 16px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff;">api key</label>
+                    <input id="apiKeyInput" type="password" autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #eee; box-sizing: border-box; background: #fcfcfc;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; color: #ffffff;">model choice</label>
+                    <select id="modelSelect" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #eee; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; box-sizing: border-box; background: #fcfcfc;">
+                        <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it (fast)</option>
+                        <option value="gemma-4-31b-it">gemma-4-31b-it (smart)</option>
+                    </select>
+                </div>
             </div>
-            <button id="saveSettings" style="background: #30638a; color: white; border: none; padding: 12px 20px; border-radius: 12px; cursor: pointer; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 20px; transition: opacity 0.2s;">save and close</button>
-            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); font-family: 'Segoe UI', sans-serif; margin-top: 15px;">
+
+            <!-- Shared Close Button -->
+            <button id="closeMenu" style="background: #30638a; color: white; border: none; padding: 10px; border-radius: 12px; cursor: pointer; width: 100%; font-family: 'Segoe UI', sans-serif; font-size: 16px; transition: opacity 0.2s;">close</button>
+            
+            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.5); font-family: 'Segoe UI', sans-serif; margin-top: 10px; text-align: center;">
                 <span id="appVersion">0.0.0</span>
             </div>
         </div>
     </div>
 
-    <!-- External Dependancies -->
+    <!-- External Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
@@ -73,9 +131,18 @@
     <script>
         const input = document.getElementById("input");
         const response = document.getElementById("response");
-        const settingsBtn = document.getElementById('settingsBtn');
-        const settingsPopup = document.getElementById('settingsPopup');
-        const saveBtn = document.getElementById('saveSettings');
+        
+        const menuBtn = document.getElementById('menuBtn');
+        const menuPopup = document.getElementById('menuPopup');
+        const closeMenuBtn = document.getElementById('closeMenu');
+        
+        const tabHistory = document.getElementById('tabHistory');
+        const tabSettings = document.getElementById('tabSettings');
+        const panelHistory = document.getElementById('panelHistory');
+        const panelSettings = document.getElementById('panelSettings');
+        
+        const clearHistoryBtn = document.getElementById('clearHistory');
+        const historyList = document.getElementById('historyList');
 
         document.addEventListener('contextmenu', (e) => e.preventDefault());
 
@@ -85,27 +152,111 @@
             }
         });
 
-        settingsBtn.onclick = () => {
-            settingsPopup.style.opacity = '1';
-            settingsPopup.style.pointerEvents = 'auto';
+        /* --- History Management --- */
+        function getHistory() {
+            const raw = localStorage.getItem('little_amethyst_chat_history');
+            if (!raw) return [];
+
+            const lines = raw.split('\n').filter(line => line.trim() !== '');
+            const parsedHistory = [];
+
+            lines.forEach(line => {
+                if (line.startsWith('user: ')) {
+                    parsedHistory.push({ role: 'user', text: line.replace('user: ', '') });
+                } else if (line.startsWith('assistant: ')) {
+                    parsedHistory.push({ role: 'assistant', text: line.replace('assistant: ', '') });
+                }
+            });
+
+            return parsedHistory;
+        }
+
+        function saveMessagePair(userText, assistantText) {
+            let history = getHistory();
+            history.push({ role: 'user', text: userText });
+            history.push({ role: 'assistant', text: assistantText });
+
+            if (history.length > 20) {
+                history = history.slice(history.length - 20);
+            }
+
+            const textFormat = history.map(msg => `${msg.role}: ${msg.text}`).join('\n');
+            localStorage.setItem('little_amethyst_chat_history', textFormat);
+        }
+
+        function renderHistory() {
+            historyList.innerHTML = '';
+            const history = getHistory();
+
+            if (history.length === 0) {
+                historyList.innerHTML = `<div style="color: #ffffff; text-align: center; font-size: 16px; margin-top: 0px;">no messages saved yet</div>`;
+                return;
+            }
+
+            history.forEach(msg => {
+                const bubble = document.createElement('div');
+                const isUser = msg.role === 'user';
+                
+                bubble.style.cssText = isUser 
+                    ? 'background: rgba(255, 255, 255, 0.2); color: #ffffff; align-self: flex-end; padding: 10px 14px; border-radius: 15px 15px 2px 15px; max-width: 80%; word-wrap: break-word; font-size: 16px; line-height: 1.4; box-shadow: 0 2px 5px rgba(0,0,0,0.1);'
+                    : 'background: rgba(255, 255, 255, 0.2); color: #ffffff; align-self: flex-start; padding: 10px 14px; border-radius: 15px 15px 15px 2px; max-width: 80%; word-wrap: break-word; font-size: 16px; line-height: 1.4; box-shadow: 0 2px 5px rgba(0,0,0,0.1);';
+                
+                bubble.innerText = msg.text;
+                historyList.appendChild(bubble);
+            });
+
+            historyList.scrollTop = historyList.scrollHeight;
+        }
+
+        /* --- Tab Switching Logic --- */
+        function switchTab(tab) {
+            if (tab === 'history') {
+                tabHistory.classList.add('active');
+                tabSettings.classList.remove('active');
+                panelHistory.style.display = 'flex';
+                panelSettings.style.display = 'none';
+                renderHistory();
+            } else if (tab === 'settings') {
+                tabSettings.classList.add('active');
+                tabHistory.classList.remove('active');
+                panelSettings.style.display = 'flex';
+                panelHistory.style.display = 'none';
+            }
+        }
+
+        tabHistory.onclick = () => switchTab('history');
+        tabSettings.onclick = () => switchTab('settings');
+
+        /* --- Menu Toggle & Close --- */
+        menuBtn.onclick = () => {
+            renderHistory();
+            menuPopup.style.opacity = '1';
+            menuPopup.style.pointerEvents = 'auto';
             input.disabled = true;
             document.getElementById('apiKeyInput').disabled = false;
             document.getElementById('modelSelect').disabled = false;
         };
 
-        saveBtn.onclick = () => {
+        closeMenuBtn.onclick = () => {
+            // Automatically save settings state upon closing
             localStorage.setItem('little_amethyst_api_key', document.getElementById('apiKeyInput').value);
             localStorage.setItem('little_amethyst_model', document.getElementById('modelSelect').value);
-            settingsPopup.style.opacity = '0';
-            settingsPopup.style.pointerEvents = 'none';
+            
+            menuPopup.style.opacity = '0';
+            menuPopup.style.pointerEvents = 'none';
             document.getElementById('apiKeyInput').disabled = true;
             document.getElementById('modelSelect').disabled = true;
-            input.disabled = false;                     
+            input.disabled = false;
             input.focus();
         };
 
+        clearHistoryBtn.onclick = () => {
+            localStorage.removeItem('little_amethyst_chat_history');
+            renderHistory();
+        };
+
         window.onload = () => {
-            document.getElementById('appVersion').innerText = "1.0.5";
+            document.getElementById('appVersion').innerText = "1.0.6";
             if(localStorage.getItem('little_amethyst_api_key')) {
                 document.getElementById('apiKeyInput').value = localStorage.getItem('little_amethyst_api_key');
             }
@@ -131,6 +282,7 @@
                 responseDiv.classList.add("thinking-text");
                 
                 let isFirstChunk = true;
+                let fullAssistantReply = "";
 
                 try {
                     await getResponse(text, (chunk) => {
@@ -140,14 +292,21 @@
                             isFirstChunk = false;
                         }
                         responseDiv.innerText += chunk;
+                        fullAssistantReply += chunk;
                     });
+
+                    if (fullAssistantReply) {
+                        saveMessagePair(text, fullAssistantReply);
+                    }
+
                 } catch (error) {
                     responseDiv.classList.remove("thinking-text");
+                    let errorText = "mnh... my head feels a bit fuzzy... can you say that again-?";
                     if (error === "no-key") {
-                        responseDiv.innerText = "mnh... i don't have my key yet... could you check the settings for me-?";
-                    } else {
-                        responseDiv.innerText = "mnh... my head feels a bit fuzzy... can you say that again-?";
+                        errorText = "mnh... i don't have my key yet... could you check the settings for me-?";
                     }
+                    responseDiv.innerText = errorText;
+                    saveMessagePair(text, errorText);
                 }
 
                 input.value = "";

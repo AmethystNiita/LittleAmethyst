@@ -27,8 +27,6 @@ async function getResponse(message, onChunk) {
     throw "no-key"; 
   }
 
-  saveMessage("user", message);
-
   const history = loadChat();
   const fullPrompt = `
   role:
@@ -120,7 +118,6 @@ try {
       }
     }
 
-    saveMessage("assistant", fullReply);
     return fullReply;
 
   } catch (error) {
