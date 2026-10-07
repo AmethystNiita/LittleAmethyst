@@ -3,7 +3,7 @@ electron/out/
 electron/start.bat
 tauri/.vscode/
 tauri/node_modules/
-tauri/src-tauri/
+
 tauri/src/
 tauri/package.json
 tauri/package-lock.json
@@ -11,3 +11,4 @@ compiled/
 *.log
 Thumbs.db
 .DS_Store
+/tauri/src-tauri
