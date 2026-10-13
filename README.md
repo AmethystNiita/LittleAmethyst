@@ -23,31 +23,6 @@ If you just want to run the app without messing with any code or terminals, you 
 2. Download the latest version.
 3. Run the installer, and launch Little Amethyst.
 
-## 🌟 Setup and installation
-
-### Prerequisites
-
-Before running the application, make sure you have **Node.js** installed on your computer.
-
-### 1. Clone the Repository
-
-Open your terminal and run:
-
-* `git clone https://github.com/AmethystNiita/LittleAmethyst.git`
-* `cd LittleAmethyst`
-
-### 2. Install Dependencies
-
-Run the following command to install everything needed:
-
-* `npm install`
-
-### 3. Run the Application
-
-Start your desktop companion with:
-
-* `npm start`
-
 ## 🔑 Configuration
 
 To talk with Little Amethyst, you will need a free API key from Google AI Studio.
