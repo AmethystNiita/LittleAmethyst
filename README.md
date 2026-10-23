@@ -1,39 +1,54 @@
-<img width="1918" height="1017" alt="image" src="https://github.com/user-attachments/assets/1a98aa1a-f016-4d8a-922d-8df4ce06165e" />
+![little amethyst banner](https://github.com/user-attachments/assets/1a98aa1a-f016-4d8a-922d-8df4ce06165e)
 
-<p align="center"><i>Oh no, they're staring directly into my face...</i></p>
+<p align="center"><i>oh no... they're staring directly into my face~ :3</i></p>
 
-## 💖 Little Amethyst
+## 💜 little amethyst
 
-"hey... i’m here... how are you feeling-?"
+*hey... i'm here... how are you feeling-?*
 
-Little Amethyst is your minimal, soft, and comforting little desktop AI.
+little amethyst is a small, soft, and comforting desktop ai... a little companion with a glowing face, a calming atmosphere, and a space where you can talk about whatever's on your mind~ 🌙
 
-## ✨ Features
+with its gentle gradient background and cute little niita-head, little amethyst is designed to make chatting with ai feel a little more personal, cozy, and approachable~
 
-* A smooth, calming gradient background.
-* Cute glowing patented Niita-head in the middle.
-* You can choose between `gemma-4-26b-a4b-it` (quick responses) and `gemma-4-31b-it` (smarter conversations).
-* Safely saves your API key and model preferences directly on your computer.
+## ✨ a few little things it can do
 
-## 😍 Downloads and releases
+- 🌷 **a calming gradient background** — soft colors that make the whole experience feel a little gentler
+- 🔮 **a glowing niita-head** — a cute little face waiting right in the middle of your screen
+- 💫 **two gemma models to choose from** — use `gemma-4-26b-a4b-it` for quicker responses or `gemma-4-31b-it` for more capable conversations
+- 🔑 **local settings** — your api key and model preferences are saved on your own computer
 
-If you just want to run the app without messing with any code or terminals, you can grab the ready-to-use version!
+## 🌸 getting little amethyst
 
-1. Go to the "Releases" section on the right side of this GitHub page.
-2. Download the latest version.
-3. Run the installer, and launch Little Amethyst.
+just want to meet your little companion? no coding or terminal magic needed~ :3
 
-## 🔑 Configuration
+1. head over to the **releases** section on the right side of this github page
+2. download the latest release
+3. run the installer and open little amethyst~
 
-To talk with Little Amethyst, you will need a free API key from Google AI Studio.
+and there you go... your little companion is ready to meet you~ 💜
 
-1. Launch the application.
-2. Click (**◆**) in the top-right corner.
-3. Click the link to grab a key from **[aistudio.google.com/api-keys](https://aistudio.google.com/api-keys)**.
-4. Paste your key into the input field, choose your preferred model, and click **Save and Close**.
+## 🔑 getting everything ready
 
-## 💫 Built with
+little amethyst needs an api key from google ai studio to start chatting~
 
-* **Tauri** - Desktop application framework
-* **Three.js** - 3D graphics rendering
-* **Google Gemma** - Generative AI models
+1. open little amethyst
+2. click the **◆** in the top-right corner
+3. visit [google ai studio](https://aistudio.google.com/api-keys) to create an api key
+4. paste your key into the input field
+5. choose your preferred model and click **save and close**~
+
+that's it... all ready~ ✨
+
+## 🛠️ made with
+
+a few lovely technologies come together to bring little amethyst to life~
+
+- **[tauri](https://tauri.app/)** — the foundation for the desktop application
+- **[three.js](https://threejs.org/)** — bringing the visuals and glowing little face to life
+- **[google gemma](https://ai.google.dev/gemma)** — the language models that power your conversations
+
+---
+
+<p align="center">
+  <i>made with care, a little curiosity, and a whole lot of amethyst~ 💜</i>
+</p>
